@@ -2,6 +2,11 @@
 #include "keyboard_input.h"
 
 extern void free(void *ptr);
+extern int puts(const char *str);
+
+void printl(const char *str){
+    puts(str);
+}
 
 void commit_draw_ctx (draw_ctx *ctx){
 

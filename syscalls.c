@@ -9,14 +9,6 @@ void request_draw_ctx(draw_ctx *ctx){
 
 }
 
-void* malloc(size_t size){
-    return 0;
-}
-
-void free(void* ptr, size_t size){
-
-}
-
 void halt(int reason){
 
 }

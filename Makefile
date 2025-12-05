@@ -9,7 +9,7 @@ OS_PATH ?= ../os
 EXEC_NAME ?= redxlib.a
 
 STDINC ?= $(OS_PATH)/shared/
-CFLAGS ?= -std=c99 -I$(STDINC) -I. -O0
+CFLAGS ?= -std=c99 -I../raylib/src -I$(STDINC) -I. -O0
 C_SOURCE ?= $(shell find . -name '*.c')
 OBJ ?= $(C_SOURCE:%.c=%.o)
 
@@ -23,7 +23,7 @@ $(EXEC_NAME): $(OBJ)
 
 all: $(EXEC_NAME)
 
-clean: 	
+clean:
 	rm $(OBJ)
 	rm $(EXEC_NAME)
 

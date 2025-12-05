@@ -1,11 +1,17 @@
 #include "ui/draw/draw.h"
+#include "raylib.h"
+#include "syscalls/syscalls.h"
+
+
+#define CONVERT_COLOR(color) GetColor(((color & 0xFFFFFF) << 8) | ((color >> 24) & 0xFF))
 
 void fb_clear(draw_ctx *ctx, uint32_t color) {
+    ClearBackground(CONVERT_COLOR(color));
     ctx->full_redraw = 1;
 }
 
 void fb_draw_raw_pixel(draw_ctx *ctx, uint32_t x, uint32_t y, color color){
-    
+
 }
 
 void fb_draw_pixel(draw_ctx *ctx, uint32_t x, uint32_t y, color color){
@@ -14,7 +20,7 @@ void fb_draw_pixel(draw_ctx *ctx, uint32_t x, uint32_t y, color color){
 }
 
 void fb_fill_rect(draw_ctx *ctx, int32_t x, int32_t y, uint32_t width, uint32_t height, color color){
-   
+    DrawRectangle(x, y, width, height, CONVERT_COLOR(color));
     mark_dirty(ctx, x,y,width,height);
 }
 
@@ -23,7 +29,7 @@ void fb_draw_img(draw_ctx *ctx, uint32_t x, uint32_t y, uint32_t *img, uint32_t 
 }
 
 void fb_draw_partial_img(draw_ctx *ctx, uint32_t *img, uint32_t x, uint32_t y, uint32_t full_width, uint32_t full_height, image_transform transform){
-    
+
 
     mark_dirty(ctx, x,y, full_width, full_height);
 }
@@ -63,7 +69,7 @@ gpu_rect fb_draw_line(draw_ctx *ctx, uint32_t x0, uint32_t y0, uint32_t x1, uint
 }
 
 void fb_draw_raw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale, uint32_t color){
-    
+
 }
 
 void fb_draw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale, uint32_t color){
@@ -74,7 +80,7 @@ void fb_draw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale,
 gpu_size fb_draw_string(draw_ctx *ctx, const char* s, uint32_t x0, uint32_t y0, uint32_t scale, uint32_t color){
     const uint32_t char_size = fb_get_char_size(scale);
     const int str_length = strlen(s);
-    
+
     uint32_t xoff = 0;
     uint32_t xSize = 0;
     uint32_t xRowSize = 0;
@@ -83,7 +89,7 @@ gpu_size fb_draw_string(draw_ctx *ctx, const char* s, uint32_t x0, uint32_t y0, 
     const uint32_t start_y = y0;
     uint32_t rows = 1;
 
-    for (int i = 0; i < str_length; ++i){    
+    for (int i = 0; i < str_length; ++i){
         char c = s[i];
         if (c == '\n'){
             if (xRowSize > xSize)

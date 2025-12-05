@@ -6,7 +6,7 @@ DUMP 	   := objdump
 
 OS_PATH ?= ../os
 
-EXEC_NAME ?= crosslib.a
+EXEC_NAME ?= redxlib.a
 
 STDINC ?= $(OS_PATH)/shared/
 CFLAGS ?= -std=c99 -I$(STDINC) -I. -O0

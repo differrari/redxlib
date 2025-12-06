@@ -2,8 +2,33 @@
 #include "raylib.h"
 #include "syscalls/syscalls.h"
 
-
 #define CONVERT_COLOR(color) GetColor(((color & 0xFFFFFF) << 8) | ((color >> 24) & 0xFF))
+
+void begin_drawing(draw_ctx *ctx){
+    BeginDrawing();
+}
+
+void destroy_draw_ctx(draw_ctx *ctx){
+    CloseWindow();
+}
+
+void commit_draw_ctx (draw_ctx *ctx){
+    EndDrawing();
+}
+
+void request_draw_ctx(draw_ctx *ctx){
+    uint32_t w = ctx->width ? ctx->width : 600;
+    uint32_t h = ctx->height ? ctx->height : 300;
+    InitWindow(w, h, "raylib [core] example - basic window");
+    SetTargetFPS(10);
+    ctx->width = w;
+    ctx->height = h;
+    ctx->stride = 4 * w;
+}
+
+bool should_close_ctx(){
+    return WindowShouldClose();
+}
 
 void fb_clear(draw_ctx *ctx, uint32_t color) {
     ClearBackground(CONVERT_COLOR(color));
@@ -78,46 +103,7 @@ void fb_draw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale,
 }
 
 gpu_size fb_draw_string(draw_ctx *ctx, const char* s, uint32_t x0, uint32_t y0, uint32_t scale, uint32_t color){
-    const uint32_t char_size = fb_get_char_size(scale);
-    const int str_length = strlen(s);
-
-    uint32_t xoff = 0;
-    uint32_t xSize = 0;
-    uint32_t xRowSize = 0;
-    uint32_t ySize = 0;
-
-    const uint32_t start_y = y0;
-    uint32_t rows = 1;
-
-    for (int i = 0; i < str_length; ++i){
-        char c = s[i];
-        if (c == '\n'){
-            if (xRowSize > xSize)
-                xSize = xRowSize;
-            xRowSize = 0;
-            xoff = 0;
-            y0 += (char_size + 2);
-            rows++;
-        } else {
-
-            xoff++;
-            xRowSize += char_size;
-        }
-    }
-    if (xRowSize > xSize)
-        xSize = xRowSize;
-
-    ySize = rows * (char_size + 2);
-
-    uint32_t bbox_w = xSize;
-    uint32_t bbox_h = ySize;
-
-    if (x0 + bbox_w > ctx->width) bbox_w = ctx->width - x0;
-    if (start_y + bbox_h > ctx->height) bbox_h = ctx->height - start_y;
-
-    if (bbox_w && bbox_h) mark_dirty(ctx, x0,start_y,bbox_w,bbox_h);
-
-    return (gpu_size){xSize,ySize};
+    DrawText(s, x0, y0, 24 * scale, CONVERT_COLOR(color));
 }
 
 uint32_t fb_get_char_size(uint32_t scale){

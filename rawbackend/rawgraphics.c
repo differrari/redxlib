@@ -25,7 +25,7 @@ void request_draw_ctx(draw_ctx *ctx){
     uint32_t w = ctx->width ? ctx->width : 600;
     uint32_t h = ctx->height ? ctx->height : 300;
     InitWindow(w, h, "RedXLib");
-    SetTargetFPS(10);
+    SetTargetFPS(30);
     ctx->width = w;
     ctx->height = h;
     ctx->stride = 4 * w;

@@ -16,7 +16,7 @@ OBJ ?= $(C_SOURCE:%.c=%.o)
 .PHONY: dump
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c -c $< -o $@ -I=$(STDINC)
+	$(CC) $(CFLAGS) -DCROSS -c -c $< -o $@ -I=$(STDINC)
 
 $(EXEC_NAME): $(OBJ)
 	$(AR) rcs $@ $(OBJ)

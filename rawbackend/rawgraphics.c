@@ -17,8 +17,9 @@ void commit_draw_ctx(draw_ctx *ctx){
 }
 
 void resize_draw_ctx(draw_ctx *ctx, uint32_t width, uint32_t height){
-    SetWindowMinSize(width, height);
-    SetWindowMaxSize(width, height);
+    SetWindowSize(width, height);
+    ctx->width = width;
+    ctx->height = height;
 }
 
 void request_draw_ctx(draw_ctx *ctx){
@@ -61,7 +62,7 @@ void fb_draw_partial_img(draw_ctx *ctx, uint32_t *img, uint32_t x, uint32_t y, u
 }
 
 gpu_rect fb_draw_line(draw_ctx *ctx, uint32_t x0, uint32_t y0, uint32_t x1, uint32_t y1, color color){
-
+    return (gpu_rect){{0,0},{0,0}};
 }
 
 void fb_draw_raw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale, uint32_t color){
@@ -74,6 +75,7 @@ void fb_draw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale,
 
 gpu_size fb_draw_string(draw_ctx *ctx, const char* s, uint32_t x0, uint32_t y0, uint32_t scale, uint32_t color){
     DrawText(s, x0, y0, 24 * scale, CONVERT_COLOR(color));
+    return (gpu_size){0,0};
 }
 
 uint32_t fb_get_char_size(uint32_t scale){

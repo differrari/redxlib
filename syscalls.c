@@ -57,12 +57,17 @@ bool read_event(kbd_event *event){
 }
 
 void get_mouse_status(mouse_input *in){
-    in->x = GetMouseX();
+    in->x = GetMouseX();//TODO: should be deltas
     in->y = GetMouseY();
     in->scroll = ((int)GetMouseWheelMove() & 0xFF);
     in->buttons = 0;
     for (int i = 0; i < 3; i++)
-        in->buttons |= (IsMouseButtonPressed(i) & 1) << i;
+        in->buttons |= (IsMouseButtonDown(i) & 1) << i;
+}
+
+void get_mouse_position(gpu_point *out){
+    out->x = GetMouseX();
+    out->y = GetMouseY();
 }
 
 FS_RESULT openf(const char* path, file* descriptor){

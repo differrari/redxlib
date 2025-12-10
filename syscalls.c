@@ -56,18 +56,15 @@ bool read_event(kbd_event *event){
     return false;
 }
 
-void get_mouse_status(mouse_input *in){
-    in->x = GetMouseX();//TODO: should be deltas
-    in->y = GetMouseY();
-    in->scroll = ((int)GetMouseWheelMove() & 0xFF);
-    in->buttons = 0;
+void get_mouse_status(mouse_data *in){
+    in->raw.x = (int8_t)(GetMouseDelta().x * 128);
+    in->raw.y = (int8_t)(GetMouseDelta().y * 128);
+    in->raw.scroll = ((int)GetMouseWheelMove() & 0xFF);
+    in->raw.buttons = 0;
     for (int i = 0; i < 3; i++)
-        in->buttons |= (IsMouseButtonDown(i) & 1) << i;
-}
-
-void get_mouse_position(gpu_point *out){
-    out->x = GetMouseX();
-    out->y = GetMouseY();
+        in->raw.buttons |= (IsMouseButtonDown(i) & 1) << i;
+    in->position.x = GetMouseX();
+    in->position.y = GetMouseY();
 }
 
 FS_RESULT openf(const char* path, file* descriptor){

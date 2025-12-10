@@ -1,3 +1,4 @@
+#include "std/string.h"
 #include "ui/draw/draw.h"
 #include "raylib.h"
 #include "syscalls/syscalls.h"
@@ -66,7 +67,9 @@ gpu_rect fb_draw_line(draw_ctx *ctx, uint32_t x0, uint32_t y0, uint32_t x1, uint
 }
 
 void fb_draw_raw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale, uint32_t color){
-
+    string s = string_from_char(c);
+    DrawText(s.data, x, y, 24 * scale, CONVERT_COLOR(color));
+    string_free(s);
 }
 
 void fb_draw_char(draw_ctx *ctx, uint32_t x, uint32_t y, char c, uint32_t scale, uint32_t color){

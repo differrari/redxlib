@@ -47,7 +47,6 @@ bool read_event(kbd_event *event){
     // } while (key);
     for (int i = 0; i < 512; i++)
         if (keypresses[i] && IsKeyUp(i)){
-            printf("Key released %i",i);
             event->type = KEY_RELEASE;
             event->key = raylib_to_redacted[i];
             keypresses[i] = false;

@@ -10,7 +10,7 @@ EXEC_NAME ?= redxlib.a
 
 STDINC ?= $(OS_PATH)/shared/
 CFLAGS ?= -std=c99 -I../raylib/src -I$(STDINC) -I. -O0
-C_SOURCE ?= $(shell find . -name '*.c')
+C_SOURCE ?= $(shell find . -name "*.c")
 OBJ ?= $(C_SOURCE:%.c=%.o)
 
 .PHONY: dump

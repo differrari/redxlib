@@ -5,6 +5,7 @@
 #include "math/math.h"
 #include "syscalls/syscalls.h"
 #include "keycode_convert.h"
+#include <time.h>
 
 extern void free(void *ptr);
 extern int puts(const char *str);
@@ -83,3 +84,9 @@ void closef(file *descriptor){
 
 }
 
+void msleep(uint64_t msec){
+    struct timespec rqtp;
+    rqtp.tv_sec = msec / 1000;
+    rqtp.tv_nsec = (msec % 1000) * 1000000;
+    nanosleep(&rqtp, NULL);
+}

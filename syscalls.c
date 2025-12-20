@@ -5,6 +5,7 @@
 #include "math/math.h"
 #include "syscalls/syscalls.h"
 #include "keycode_convert.h"
+#include "std/memory.h"
 #include <time.h>
 
 extern void free(void *ptr);
@@ -82,6 +83,12 @@ size_t writef(file *descriptor, const char* buf, size_t size){
 
 void closef(file *descriptor){
 
+}
+
+void* zalloc(size_t size){
+    void *p = malloc(size);
+    memset(p,0,size);
+    return p;
 }
 
 void msleep(uint64_t msec){

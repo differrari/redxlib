@@ -8,6 +8,7 @@
 #include "std/memory.h"
 #define __USE_POSIX199309
 #include <time.h>
+#include <stdio.h>
 
 extern void free(void *ptr);
 extern int puts(const char *str);
@@ -15,6 +16,22 @@ extern void exit(int status);
 
 void printl(const char *str){
     puts(str);
+}
+
+char log_buf[1024];
+
+char *read_full_file(const char *path){
+    FILE *fd = fopen(path,"r");
+    fseek(fd, 0, SEEK_END);
+    long fsize = ftell(fd);
+    rewind(fd);
+
+    char *fcontent = (char*)zalloc(sizeof(char) * (fsize+1));
+    fread(fcontent, fsize, 1, fd);
+
+    fclose(fd);
+    
+    return fcontent;
 }
 
 void free_sized(void* ptr, size_t size)

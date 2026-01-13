@@ -34,6 +34,16 @@ char *read_full_file(const char *path){
     return fcontent;
 }
 
+bool write_full_file(const char *path, void* buf, size_t size){
+    FILE *fd = fopen(path,"w");
+    
+    size_t res = fwrite(buf, size, 1, fd);
+    
+    fclose(fd);
+    
+    return res > 0;
+}
+
 void free_sized(void* ptr, size_t size)
 {
     free(ptr);

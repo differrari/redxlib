@@ -22,6 +22,7 @@ char log_buf[1024];
 
 char *read_full_file(const char *path){
     FILE *fd = fopen(path,"r");
+    if (!fd) return 0;
     fseek(fd, 0, SEEK_END);
     long fsize = ftell(fd);
     rewind(fd);

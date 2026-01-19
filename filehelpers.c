@@ -10,8 +10,8 @@
 #include "std/string.h"
 #include "syscalls/syscalls.h"
 
-char cwd[128];
-char *homedir; 
+static char cwd[128];
+static char *homedir; 
 
 #ifndef DT_DIR
 #define DT_DIR 4

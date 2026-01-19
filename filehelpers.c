@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #define _GNU_SOURCE
+#define _DEFAULT_SOURCE
 #include <dirent.h>
 #include <pwd.h>
 #include <sys/stat.h>
@@ -11,6 +12,10 @@
 
 char cwd[128];
 char *homedir; 
+
+#ifndef DT_DIR
+#define DT_DIR 4
+#endif
 
 void traverse_directory(char *directory, bool recursive, dir_traverse func){
     DIR *dir;
